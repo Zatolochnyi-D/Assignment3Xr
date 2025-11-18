@@ -31,9 +31,6 @@ public class WorldSpawner : MonoBehaviour
                 var userLocal = plane.transform.worldToLocalMatrix.MultiplyPoint(userPosition);
                 var userX = userLocal.x;
                 var userY = userLocal.y;
-                // Debug.Log(plane.gameObject.name);
-                // Debug.Log($"Plane top {planeTopX}, {planeTopY} and bottom {planeBottomX}, {planeBottomY}");
-                // Debug.Log($"Player {userX}, {userY}");
 
                 if (userY <= planeTopY && userY >= planeBottomY && userX <= planeTopX && userX >= planeBottomX)
                     planes.Add(plane);
@@ -53,8 +50,5 @@ public class WorldSpawner : MonoBehaviour
             var y = -(a * x + c * z + d) / b;
             Instantiate(objectToSpawn, new Vector3(x, y, z), Quaternion.identity);
         }
-
-        // foreach (var el in planes)
-        //     Debug.Log(el.gameObject.name);
     }
 }

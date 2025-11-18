@@ -600,6 +600,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planeManager: {fileID: 2512387470231460708}
   spawnRadius: 1
+  objectToSpawn: {fileID: 5226776740807474186, guid: 1aba2c597a53a4b24b2b262b2455f912, type: 3}
+  objectsToSpawn: 20
 --- !u!1001 &1013680637
 PrefabInstance:
   m_ObjectHideFlags: 0
