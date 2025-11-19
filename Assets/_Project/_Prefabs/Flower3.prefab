@@ -48,6 +48,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5552115474352027124, guid: e92af549950584b5dbadd5f091b3954e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.215
+      objectReference: {fileID: 0}
+    - target: {fileID: 5552115474352027124, guid: e92af549950584b5dbadd5f091b3954e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.036
+      objectReference: {fileID: 0}
     - target: {fileID: 6505433879233359294, guid: e92af549950584b5dbadd5f091b3954e, type: 3}
       propertyPath: m_Name
       value: Flower3
