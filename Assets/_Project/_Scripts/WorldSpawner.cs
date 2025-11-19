@@ -9,7 +9,9 @@ public class WorldSpawner : MonoBehaviour
 
     [SerializeField] private ARPlaneManager planeManager;
     [SerializeField] private float spawnRadius = 1f;
-    [SerializeField] private GameObject objectToSpawn;
+    [SerializeField] private GameObject[] grassBushes;
+    [SerializeField] private GameObject[] flowers;
+    [SerializeField] private float bushChance = 0.7f;
     [SerializeField] private int objectsToSpawn = 20;
 
     void Awake()
@@ -50,9 +52,19 @@ public class WorldSpawner : MonoBehaviour
             var a = plane.up.x;
             var b = plane.up.y;
             var c = plane.up.z;
-            var d = -(a * plane.position.x + b * plane.position.y + c * plane.position.z); 
+            var d = -(a * plane.position.x + b * plane.position.y + c * plane.position.z);
             var y = -(a * x + c * z + d) / b;
-            Instantiate(objectToSpawn, new Vector3(x, y, z), Quaternion.identity);
+
+            GameObject[] objectsToSpawn;
+            if (Random.value < bushChance)
+                objectsToSpawn = grassBushes;
+            else
+                objectsToSpawn = flowers;
+            var newObject = Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)]).transform;
+            newObject.position = new Vector3(x, y, z);
+            newObject.eulerAngles = new(0f, Random.Range(0f, 360f), 0f);
+            var s = Random.Range(0.75f, 1.25f);
+            newObject.localScale = new(s, s, s);
         }
     }
 }
