@@ -28,7 +28,7 @@ public class WorldSpawner : MonoBehaviour
         return false;
     }
 
-    public void SpawnObjects()
+    public bool SpawnObjects()
     {
         var userPosition = Camera.main.transform.position;
         var planes = new List<ARPlane>();
@@ -49,7 +49,7 @@ public class WorldSpawner : MonoBehaviour
                 if (breaker >= 1000)
                 {
                     Debug.Log("Loop is taking too long");
-                    break;
+                    return false;
                 }
                 i--;
                 continue;
@@ -76,8 +76,10 @@ public class WorldSpawner : MonoBehaviour
             if (breaker >= 1000)
             {
                 Debug.Log("Loop is taking too long");
-                break;
+                return false;
             }
         }
+
+        return true;
     }
 }
