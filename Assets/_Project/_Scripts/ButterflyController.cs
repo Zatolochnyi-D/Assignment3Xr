@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 public class ButterflyController : MonoBehaviour
@@ -21,25 +22,29 @@ public class ButterflyController : MonoBehaviour
 
     void Start()
     {
-        Spawn();
-        Shuffle();
-        Move();
-        AnimateWings();
+        Spawn(destroyCancellationToken);
+        Shuffle(destroyCancellationToken);
+        Move(destroyCancellationToken);
+        AnimateWings(destroyCancellationToken);
     }
 
-    private async void Spawn()
+    private async void Spawn(CancellationToken token)
     {
         for (var elapsedTime = 0f; elapsedTime < spawnInTime; elapsedTime += Time.deltaTime)
         {
+            if (token.IsCancellationRequested)
+                return;
             transform.localScale = Mathf.Min(elapsedTime / spawnInTime, 1f) * Vector3.one;
             await Awaitable.NextFrameAsync();
         }
     }
 
-    private async void Shuffle()
+    private async void Shuffle(CancellationToken token)
     {
         while (true)
         {
+            if (token.IsCancellationRequested)
+                return;
             var direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
             transform.forward = direction;
             currentMovementSpeed = Random.Range(speedRange.x, speedRange.y);
@@ -47,19 +52,23 @@ public class ButterflyController : MonoBehaviour
         }
     }
 
-    private async void Move()
+    private async void Move(CancellationToken token)
     {
         while (true)
         {
+            if (token.IsCancellationRequested)
+                return;
             transform.position += Time.deltaTime * currentMovementSpeed * transform.forward;
             await Awaitable.NextFrameAsync();
         }
     }
 
-    private async void AnimateWings()
+    private async void AnimateWings(CancellationToken token)
     {
         while (true)
         {
+            if (token.IsCancellationRequested)
+                return;
             var right = Mathf.Min(Time.deltaTime * swingSpeed * (wingDirection ? -1 : 1), rightLimitation);
             if (right == rightLimitation)
                 wingDirection = !wingDirection;
