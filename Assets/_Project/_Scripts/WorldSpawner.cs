@@ -36,7 +36,7 @@ public class WorldSpawner : MonoBehaviour
             if (plane.alignment == UnityEngine.XR.ARSubsystems.PlaneAlignment.HorizontalUp)
                 if (CheckIfWorldPointIsInsidePlane(plane, userPosition))
                     planes.Add(plane);
-
+        var breaker = 0;
         for (int i = 0; i < objectsToSpawn; i++)
         {
             var inCylinder = Random.insideUnitCircle * spawnRadius;
@@ -45,6 +45,12 @@ public class WorldSpawner : MonoBehaviour
             var appropriatePlanes = planes.Where(plane => CheckIfWorldPointIsInsidePlane(plane, new(x, 0f, z))).ToArray();
             if (appropriatePlanes.Length == 0)
             {
+                breaker++;
+                if (breaker >= 1000)
+                {
+                    Debug.Log("Loop is taking too long");
+                    break;
+                }
                 i--;
                 continue;
             }
@@ -65,6 +71,13 @@ public class WorldSpawner : MonoBehaviour
             newObject.eulerAngles = new(0f, Random.Range(0f, 360f), 0f);
             var s = Random.Range(0.75f, 1.25f);
             newObject.localScale = new(s, s, s);
+
+            breaker++;
+            if (breaker >= 1000)
+            {
+                Debug.Log("Loop is taking too long");
+                break;
+            }
         }
     }
 }
